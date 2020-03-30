@@ -19,7 +19,7 @@ export default class MyApp extends App {
     return (
       <>
         <Head>
-          <title>SQUID</title>
+          <title>ThaiAlert</title>
         </Head>
         <Component {...pageProps} />
       </>
