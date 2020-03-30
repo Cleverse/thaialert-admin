@@ -6,46 +6,28 @@ import { GoogleMap } from './GoogleMap'
 import React, { useEffect, useState } from 'react'
 var qs = require('qs')
 
-const fetchData = async ids => {
-  const resps = await Promise.all(
-    ids.map(async id => {
-      const res = await axios.get(`${API_URL}/l/${id}.json`).then(resp => {
-        const { data } = resp
-        return data
-      })
-      return { id, ...res }
-    })
-  )
-  return resps
+const fetchData = async () => {
+  const resp = await axios.get(API_URL + '/location/latest', {
+    headers: {
+      'X-TH-ANONYMOUS-ID': '1'
+    }
+  })
+  return resp.data
 }
 
-const API_URL = process.env.API_URL || 'https://squid.id'
+const API_URL = process.env.API_URL || 'https://api.staging.thaialert.com'
 
 export const HomePage = ({ ...props }) => {
   const [selected, setSelected] = useState(null)
   const [tick, setTick] = useState(1)
-  const [datas, setDatas] = useState(null)
-  console.log('props', props)
-  useEffect(() => {
-    const idStr = qs.parse(location.search)['?id']
-    console.log('idStr', idStr)
-    if (!idStr) {
-      return
-    }
-    const ids = idStr.split(',')
-    fetchData(ids).then(resps => {
-      const datas = resps.map(o => {
-        return {
-          lat: o.coords.latitude,
-          lng: o.coords.longitude,
-          ...o
-        }
-      })
-      setDatas(datas)
+  const [datas, setDatas] = useState(null)  
+  useEffect(() => {    
+    fetchData().then(data => {      
+      setDatas(data)
     })
     setTimeout(() => setTick(tick + 1), 60000)
   }, [props.query, tick])
-  console.log('datas', datas)
+  
   const { coords, battery, timestamp } = selected || {}
   if (!datas) return ''
   return (

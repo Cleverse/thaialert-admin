@@ -9,7 +9,13 @@ const MAP_API_KEY =
     ? 'AIzaSyDlxiOwtfimu8TlLAytRturthsRY0z3ILo'
     : 'AIzaSyB4KPmHPc-5vbPZWSLODnJa-dVv-hWwYgk'
 
-const RANDOM_COLORs = ['green', 'green',  COLORS.ORANGE, 'green', '#CB0000']
+const STATUS_COLORS = {
+  green: '#27C269',
+  yellow: '#E5DB5C',
+  orange: '#E18518',
+  red: '#EC3131',
+  DEFAULT: '#B4B5C1',
+}
 
 export const GoogleMap = ({
   radius = MAP_RADIUS,
@@ -31,7 +37,7 @@ export const GoogleMap = ({
       yesIWantToUseGoogleMapApiInternals={true}
     >
       {datas.map((o, i) => (
-        <div lat={o.lat} lng={o.lng}>
+        <div lat={o.location.coords.latitude} lng={o.location.coords.longitude}>
           <div
             className={`rounded-full w-4 h-4 shadow`}
             style={{
@@ -39,9 +45,9 @@ export const GoogleMap = ({
               background:
                 o.id === selectedId
                   ? COLORS.BLUE
-                  : RANDOM_COLORs[i % RANDOM_COLORs.length]
+                  : STATUS_COLORS[o.code]
             }}
-            onClick={() => setSelected(o)}
+            onClick={() => setSelected(o.location)}
           />
         </div>
       ))}

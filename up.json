@@ -1,0 +1,11 @@
+{
+  "name": "thaialert-admin",
+  "lambda": {
+    "memory": 1536
+  },
+  "stages": {
+    "staging": {
+      "domain": "map.thaialert.com"
+    }
+  }
+}
