@@ -4,7 +4,6 @@ import { BORDER_RADIUS, COLORS, SHEET_HEIGHT } from './const'
 import { BottomSheet } from './BottomSheet'
 import { GoogleMap } from './GoogleMap'
 import React, { useEffect, useState } from 'react'
-var qs = require('qs')
 
 const fetchData = async () => {
   const resp = await axios.get(API_URL + '/location/latest', {
@@ -15,7 +14,7 @@ const fetchData = async () => {
   return resp.data
 }
 
-const API_URL = process.env.API_URL || 'https://api.staging.thaialert.com'
+const API_URL = process.env.API_URL || 'https://api.thaialert.com'
 
 export const HomePage = ({ ...props }) => {
   const [selected, setSelected] = useState(null)

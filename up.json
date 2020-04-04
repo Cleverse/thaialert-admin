@@ -1,10 +1,22 @@
 {
-  "name": "thaialert-admin",
+  "name": "thaialert-map",
   "lambda": {
     "memory": 1536
   },
+  "regions": [
+    "ap-southeast-1"
+  ],
   "stages": {
     "staging": {
+      "environment": {
+        "API_URL": "https://api.staging.thaialert.com"
+      },
+      "domain": "map.staging.thaialert.com"
+    },
+    "production": {
+      "environment": {
+        "API_URL": "https://api.thaialert.com"
+      },
       "domain": "map.thaialert.com"
     }
   }
